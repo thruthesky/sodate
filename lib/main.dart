@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:sodate/globals.dart';
 import 'package:sodate/screens/home/home.screen.dart';
+import 'package:sodate/screens/login/login.screen.dart';
+import 'package:sodate/screens/profile/profile.screen.dart';
 import 'package:sodate/screens/register/register.screen.dart';
 
 void main() async {
@@ -33,6 +35,8 @@ class _MainAppState extends State<MainApp> {
       getPages: [
         GetPage(name: 'home', page: () => HomeScreen()),
         GetPage(name: 'register', page: () => RegisterScreen()),
+        GetPage(name: 'login', page: () => LoginScreen()),
+        GetPage(name: 'profile', page: () => ProfileScreen()),
       ],
     );
   }

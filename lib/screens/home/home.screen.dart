@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../../globals.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -21,13 +22,38 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text('Email: ${ff.user.email}'),
-            Text('Email: ${ff.user.displayName}'),
-            Text('Email: ${ff.userData['birthday']}'),
-            RaisedButton(
-              onPressed: () => Get.toNamed('register'),
-              child: Text('Register'),
-            )
+            StreamBuilder(
+                stream: ff.userChange,
+                builder: (context, snapshot) {
+                  if (ff.loggedIn) {
+                    return Column(
+                      children: [
+                        Text('Uid: ${ff.user.uid}'),
+                        Text('Email: ${ff.user.email}'),
+                        Text('displayName: ${ff.user.displayName}'),
+                        Text('Birthday: ${ff.userData['birthday']}'),
+                        RaisedButton(
+                            onPressed: () => Get.toNamed('profile'),
+                            child: Text('회원정보 수정')),
+                        RaisedButton(onPressed: ff.logout, child: Text('로그아웃')),
+                      ],
+                    );
+                  } else {
+                    return Column(
+                      children: [
+                        Text('로그인을 해 주세요.'),
+                        RaisedButton(
+                          onPressed: () => Get.toNamed('register'),
+                          child: Text('회원가입'),
+                        ),
+                        RaisedButton(
+                          onPressed: () => Get.toNamed('login'),
+                          child: Text('로그인'),
+                        )
+                      ],
+                    );
+                  }
+                }),
           ],
         ),
       ),

@@ -19,6 +19,17 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
       body: Column(
         children: [
+          RaisedButton(
+            onPressed: () async {
+              try {
+                await ff.signInWithGoogle();
+                Get.toNamed('home');
+              } catch (e) {
+                Get.snackbar('Error', e.toString());
+              }
+            },
+            child: Text('구글 아이디로 로그인'),
+          ),
           TextFormField(
             controller: emailController,
             decoration: InputDecoration(hintText: 'Email Address'),

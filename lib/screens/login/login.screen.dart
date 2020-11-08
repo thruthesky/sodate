@@ -20,16 +20,34 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Column(
         children: [
           RaisedButton(
-            onPressed: () async {
-              try {
-                await ff.signInWithGoogle();
-                Get.toNamed('home');
-              } catch (e) {
-                Get.snackbar('Error', e.toString());
-              }
-            },
-            child: Text('구글 아이디로 로그인'),
-          ),
+              onPressed: () async {
+                setState(() => loading = true);
+                try {
+                  await ff.signInWithGoogle();
+                  Get.toNamed('home');
+                } catch (e) {
+                  print(e.toString());
+                  Get.snackbar('에러', e.toString());
+                } finally {
+                  setState(() => loading = false);
+                }
+              },
+              child: Text('구글 아이디로 로그인하기')),
+          if (GetPlatform.isIOS)
+            RaisedButton(
+                onPressed: () async {
+                  setState(() => loading = true);
+                  try {
+                    await ff.signInWithApple();
+                    Get.toNamed('home');
+                  } catch (e) {
+                    print(e.toString());
+                    Get.snackbar('에러', e.toString());
+                  } finally {
+                    setState(() => loading = false);
+                  }
+                },
+                child: Text('애플 아이디로 로그인하기')),
           TextFormField(
             controller: emailController,
             decoration: InputDecoration(hintText: 'Email Address'),
@@ -53,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 setState(() => loading = false);
               }
             },
-            child: Text('로그인'),
+            child: loading ? CircularProgressIndicator() : Text('로그인'),
           ),
         ],
       ),

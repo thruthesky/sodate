@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Sodate</string>
+    <string name="facebook_app_id">xxxxxxxxxxxxxxxxx</string>
+    <string name="fb_login_protocol_scheme">xxxxxxxxxxxxxxxxx</string>
+</resources>
